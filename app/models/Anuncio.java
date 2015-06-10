@@ -1,6 +1,7 @@
 package models;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,6 +23,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.google.common.base.Objects;
 
@@ -49,6 +51,9 @@ public class Anuncio implements Comparable<Anuncio>{
 	@Temporal(value = TemporalType.DATE)
 	private Date date;
 	
+	@Transient
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	
 	@Column
 	private String interesse;
 	
@@ -64,7 +69,7 @@ public class Anuncio implements Comparable<Anuncio>{
 	private String palavrachave;
 	// Construtor vazio para o Hibernate criar os objetos
 	public Anuncio() {
-		
+		this.date = new Date();
 	}
     
     public Anuncio(String nome, Anunciante anunciante,String descricao,List<Style> stylesLike,
@@ -85,6 +90,10 @@ public class Anuncio implements Comparable<Anuncio>{
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public String getDateFormat() {
+		return dateFormat.format(date);
 	}
 
 	public Long getId() {

@@ -80,7 +80,7 @@ public class GenericDAO {
 		return hqlQuery.getResultList();
 	}
 
-	private Query createQuery(String query) {
+	public Query createQuery(String query) {
 		return JPA.em().createQuery(query);
 	}
 }

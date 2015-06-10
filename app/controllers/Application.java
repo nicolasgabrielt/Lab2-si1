@@ -2,7 +2,10 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import javax.persistence.Query;
 
 import models.Anunciante;
 import models.Anuncio;
@@ -54,6 +57,7 @@ public class Application extends Controller {
 		isErro = SEM_ERRO;
 		 //Todos os Livros do Banco de Dados
 		List<Anuncio> result = dao.findAllByClass(Anuncio.class);
+		Collections.sort(result);
 		return ok(views.html.index.render(result,anunciosResolvidos,erro));
 	}
 
@@ -187,6 +191,25 @@ public class Application extends Controller {
 		Logger.info("LISTA: " + Arrays.toString(styles.toArray())); 
 		return styles;
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public static Result pesquisarAnuncio(){
+		DynamicForm requestPesquisa = Form.form().bindFromRequest();
+		// Radio Button
+		if(requestPesquisa.get("pesquisa").equals("Em Banda") || requestPesquisa.get("pesquisa").equals("Ocasionalmente")){
+			Query consultaEmBanda =	dao.createQuery("SELECT a FROM Anuncio a WHERE a.interesse = :parametro)");
+			
+			consultaEmBanda.setParameter("parametro", requestPesquisa.get("pesquisa"));
+			
+			System.out.println(Arrays.asList(consultaEmBanda.getResultList()));
+			return ok(views.html.index.render(consultaEmBanda.getResultList(),anunciosResolvidos
+					,SEM_ERRO));
+			// radio button
+		}
+					
+		return redirect(routes.Application.index());
 	}
 	
 

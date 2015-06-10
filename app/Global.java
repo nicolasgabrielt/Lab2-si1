@@ -51,7 +51,7 @@ public class Global extends GlobalSettings {
 					
 					while(in.hasNextLine()){
 						String nomeEstilo =in.nextLine();
-						System.out.println(nomeEstilo);
+						
 						dao.persist(new Style(nomeEstilo));
 					}
 				
