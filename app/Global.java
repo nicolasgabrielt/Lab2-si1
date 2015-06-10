@@ -7,8 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
 
 
 
@@ -68,8 +70,9 @@ public class Global extends GlobalSettings {
 				
 					dao.flush();			
 			
-			
-					for (int i = 0; i < 10; i++) {
+					if (dao.findAllByClass(Anuncio.class).size() == 0){
+					
+						for (int i = 0; i < 500; i++) {
 						Anuncio anuncio = new Anuncio();
 						Anunciante anunciante = new Anunciante();
 						Contato contatos = new Contato();
@@ -78,16 +81,15 @@ public class Global extends GlobalSettings {
 						List<Style> naoGosta = new ArrayList<>();
 
 						if (i % 2 == 0) {
-							anuncio.setNome("Quero tocar numa banda evangelica");
-							anuncio.setDescricao("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis dolor, in sagittis nisi.");
-							anuncio.setPalavrachave("123");
-							
+							anuncio.setNome("Quero uma banda");
+							anuncio.setDescricao("Queremos banda massa, que toque muito, tenha disponibilidade para sair, palavra chave '123' ");
+							anuncio.setPalavraChave("123");
 							anunciante.setNome("Nicolas");
 							anunciante.setCidade("Campina Grande");
 							anunciante.setBairro("Tambor");
 							instrumentos.add(new Instrumentos("Piano"));
 							instrumentos.add(new Instrumentos("Bongó"));
-							anunciante.setInstrumentos(instrumentos);
+							anunciante.setListInstrumentos(instrumentos);
 
 							anuncio.setInteresse("Em Banda");
 							
@@ -100,8 +102,8 @@ public class Global extends GlobalSettings {
 							naoGosta.add(new Style("Funk Carioca"));
 							anuncio.setStylesNotLike(naoGosta);
 
-							contatos.setEmail("wendley1234@hotmail.com");
-							contatos.setOutrosContatos("http://www.facebook.com.br/wendleypaulo");
+							contatos.setEmail("niolas.13@hotmail.com");
+							contatos.setOutrosContatos("http://www.facebook.com.br/");
 							contatos.setTelefone("(83)9916-5951");
 							dao.persist(contatos);
 							dao.flush();
@@ -117,9 +119,10 @@ public class Global extends GlobalSettings {
 						} else {
 							
 							anuncio.setNome("Quero tocar ocasionalmente");
-							anuncio.setDescricao("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis dolor, in sagittis nisi.");
+							anuncio.setDescricao("Toco Banjo e Clarinete palavra chave '123' ");
 							anuncio.setInteresse("Ocasionalmente");
-							anuncio.setPalavrachave("123");
+							anuncio.setPalavraChave("123");
+
 							
 							anunciante.setNome("Nicolas");
 							anunciante.setCidade("João Pessoa");
@@ -128,7 +131,7 @@ public class Global extends GlobalSettings {
 
 							instrumentos.add(new Instrumentos("Clarinete"));
 							instrumentos.add(new Instrumentos("Banjo"));
-							anunciante.setInstrumentos(instrumentos);
+							anunciante.setListInstrumentos(instrumentos);
 
 							gosta.add(new Style("Jazz"));
 							gosta.add(new Style("Instrumental"));
@@ -138,7 +141,7 @@ public class Global extends GlobalSettings {
 							naoGosta.add(new Style("Forró"));
 							anuncio.setStylesNotLike(naoGosta);
 
-							contatos.setEmail("wendley.franca@ccc.ufcg.edu.br");
+							contatos.setEmail("nicolas@ccc.ufcg.edu.br");
 							contatos.setOutrosContatos("http://www.facebook.com.br/nicolasgabriel");
 							contatos.setTelefone("(83)9939-2665");
 							dao.persist(contatos);
@@ -155,8 +158,10 @@ public class Global extends GlobalSettings {
 						}
 					}
 			
-			
-			
+						for (int j = 0; j < 25; j++) {
+							
+						}
+					}
 			
 			
 			

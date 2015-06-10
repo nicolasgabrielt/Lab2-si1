@@ -109,9 +109,12 @@ public class Anuncio implements Comparable<Anuncio>{
 		return nome;
 	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public void setNome(String titulo) throws Exception {
+		if (titulo.trim().equals("") || titulo == null) {
+			throw new Exception("Insira um titulo ao anuncio");
+		}
+		this.nome = titulo;
+	}
     
     public Anunciante getAnunciante() {
         return anunciante;
@@ -125,8 +128,11 @@ public class Anuncio implements Comparable<Anuncio>{
 		return palavrachave;
 	}
 
-	public void setPalavrachave(String palavrachave) {
-		this.palavrachave = palavrachave;
+	public void setPalavraChave(String palavraChave) throws Exception {
+		if(palavraChave.trim().equals("") || palavraChave == null){
+			throw new Exception("Insira uma palavra chave ao anuncio para que voce um dia possa excluir ele.");
+		}
+		this.palavrachave = palavraChave;
 	}
 
 	public String getDescricao() {
@@ -134,7 +140,14 @@ public class Anuncio implements Comparable<Anuncio>{
 	}
 
 
-	public void setDescricao(String descricao) {
+	public void setDescricao(String descricao) throws Exception {
+		if (descricao.trim().equals("") || descricao == null) {
+			throw new Exception("Insira um descriçao ao anuncio.");
+		}
+		if (descricao.length() < 5) {
+			throw new Exception(
+					"Insira uma descrisao de no minimo 5 caracters.");
+		}
 		this.descricao = descricao;
 	}
 	
@@ -143,7 +156,10 @@ public class Anuncio implements Comparable<Anuncio>{
 	}
 
 
-	public void setInteresse(String interesse) {
+	public void setInteresse(String interesse) throws Exception {
+		if(interesse.trim().equals("")){
+			throw new Exception("Insira onde voce quer tocar.");
+		}
 		this.interesse = interesse;
 	}
 

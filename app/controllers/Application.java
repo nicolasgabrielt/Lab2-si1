@@ -27,7 +27,7 @@ import java.util.Map;
 public class Application extends Controller {
 	private static Form<Anuncio> bookForm = Form.form(Anuncio.class);
 	private static final GenericDAO dao = new GenericDAO();
-	private static int anunciosResolvidos = 0;
+	private static int anunciosResolvidos = 25;
 	
 	 private static int SEM_ERRO = 0;
 	 private static int COM_ERRO = 1;
@@ -81,7 +81,7 @@ public class Application extends Controller {
 			anuncio.setStylesLike(getStylesSelectedData("estilosQueGosta"));
 			anuncio.setStylesNotLike(getStylesSelectedData("estilosQueNaoGosta"));
 			anuncio.setInteresse(requestAnuncio.get("ondeTocar"));
-			anuncio.setPalavrachave(requestAnuncio.get("palavrachave"));
+			anuncio.setPalavraChave(requestAnuncio.get("palavrachave"));
 		
 			/*
 			 * Dados do anunciante
@@ -89,7 +89,7 @@ public class Application extends Controller {
 			anunciante.setNome(requestAnuncio.get("nome"));
 			anunciante.setBairro(requestAnuncio.get("bairro"));
 			anunciante.setCidade(requestAnuncio.get("cidade"));
-			anunciante.setInstrumentos(getInstrumentSelectedData());
+			anunciante.setListInstrumentos(getInstrumentSelectedData());
 			
 
 			contatos.setEmail(requestAnuncio.get("email"));
@@ -204,7 +204,7 @@ public class Application extends Controller {
 			
 			consultaEmBanda.setParameter("parametro", requestPesquisa.get("pesquisa"));
 			
-			System.out.println(Arrays.asList(consultaEmBanda.getResultList()));
+	
 			return ok(views.html.index.render(consultaEmBanda.getResultList(),anunciosResolvidos
 					,SEM_ERRO));
 			// radio button

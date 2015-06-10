@@ -87,16 +87,16 @@ public class Anunciante {
 		return contato;
 	}
 
-	public void setContato(Contato contato) {
-		this.contato = contato;
-	}
-
 	public List<Instrumentos> getInstrumentos() {
 		return instrumentos;
 	}
 
-	public void setInstrumentos(List<Instrumentos> instrumentos) {
-		this.instrumentos = instrumentos;
+	public void setListInstrumentos(List<Instrumentos> listInstrumentos)
+			throws Exception {
+		if (listInstrumentos.isEmpty()) {
+			throw new Exception("Insira pelo menos um instrumento a sua lista.");
+		}
+		this.instrumentos = listInstrumentos;
 	}
 
 	@Override
@@ -114,6 +114,18 @@ public class Anunciante {
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(this.nome);
+	}
+	
+	public void setContato(Contato contato) throws Exception {
+		if (contato.getEmail() == null && contato.getOutrosContatos() == null
+				&& contato.getTelefone() == null
+				|| contato.getEmail().trim().equals("")
+				&& contato.getOutrosContatos().trim().equals("")
+				&& contato.getTelefone().trim().equals("")) {
+			throw new Exception("Insira pelo menos uma forma de contato.");
+
+		}
+		this.contato = contato;
 	}
 
 }
