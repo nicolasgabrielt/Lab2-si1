@@ -81,6 +81,7 @@ public class Application extends Controller {
 			anuncio.setStylesLike(getStylesSelectedData("estilosQueGosta"));
 			anuncio.setStylesNotLike(getStylesSelectedData("estilosQueNaoGosta"));
 			anuncio.setInteresse(requestAnuncio.get("ondeTocar"));
+			anuncio.setPalavrachave(requestAnuncio.get("palavrachave"));
 		
 			/*
 			 * Dados do anunciante
