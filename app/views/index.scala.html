@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name=viewport content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Bootstrap Admin Template : Binary Admin</title>
+    <title>My Bands - Anuncie sua banda</title>
     <!-- BOOTSTRAP STYLES-->
     <link href="@routes.Assets.at("stylesheets/bootstrap.css")" rel="stylesheet" />
     <!-- FONTAWESOME STYLES-->
@@ -171,7 +171,7 @@
                                      @Anuncio.getDescricao()
                                    </td>
                             		<td class="center">
-                            		  @Anuncio.getDate()
+                            		  @Anuncio.getDateFormat()
                             		</td>
                             		  <td class="center">@Anuncio.getAnunciante().getContato().getTelefone()</td>
                                         <td class="center">@Anuncio.getAnunciante().getContato().getEmail()

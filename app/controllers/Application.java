@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import models.Anunciante;
 import models.Anuncio;
+import models.AnuncioDeletado;
 import models.Contato;
 import models.Instrumentos;
 import models.Style;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class Application extends Controller {
 	private static Form<Anuncio> bookForm = Form.form(Anuncio.class);
 	private static final GenericDAO dao = new GenericDAO();
-	private static int anunciosResolvidos = 25;
+	private static int anunciosResolvidos = dao.findAllByClass(AnuncioDeletado.class).size();
 	
 	 private static int SEM_ERRO = 0;
 	 private static int COM_ERRO = 1;
@@ -119,6 +120,40 @@ public class Application extends Controller {
 						return redirect(routes.Application.index());	
 				
 	}
+	
+	
+	@Transactional 
+	public static void novoAnuncioDeletado(Anuncio anuncio){
+		
+		AnuncioDeletado anuncioDeletado = new AnuncioDeletado();
+		
+		anuncioDeletado = (AnuncioDeletado) anuncio;
+				
+		
+		try {
+				
+			/*
+			 * Atualiza dados do contato no banco de dados
+			 */
+			dao.persist(anuncioDeletado.getAnunciante().getContato());
+			dao.flush();
+		
+			/*
+			 * Atualiza dados do anunciante no banco de dados
+			 */
+			dao.persist(anuncioDeletado.getAnunciante());
+			dao.flush();
+						/*
+			 * Atualiza dados do anuncio no banco de dados
+			 */
+			dao.persist(anuncioDeletado);
+			dao.flush();
+		} catch (Exception e) {
+			e.getMessage();
+		}
+						
+				
+	}
 
 	@Transactional
 	public static Result deleteAnuncio(Long id) {
@@ -127,11 +162,16 @@ public class Application extends Controller {
 		if(requestAnuncio.get("palavrachave").equals((dao.findByEntityId(Anuncio.class, id)).getPalavrachave())){
 			
 		
+		Anuncio anuncio = dao.findByEntityId(Anuncio.class, id);
+		
+		novoAnuncioDeletado(anuncio);
+		
 		// Remove o Livro pelo Id
 		dao.removeById(Anuncio.class, id);
 		// Espelha no banco de dados
 		dao.flush();
-		anunciosResolvidos++;
+		anunciosResolvidos = dao.findAllByClass(AnuncioDeletado.class).size();
+		
 		isErro = DELETOU;
 			return redirect(routes.Application.anuncios());
 		}

@@ -1,12 +1,14 @@
 package models;
 
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -92,8 +94,9 @@ public class Anuncio implements Comparable<Anuncio>{
 		this.date = date;
 	}
 	
-	public String getDateFormat() {
-		return dateFormat.format(date);
+	public String getDateFormat() { 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(date);
 	}
 
 	public Long getId() {

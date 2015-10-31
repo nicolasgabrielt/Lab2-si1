@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -20,6 +21,10 @@ import java.util.Scanner;
 
 
 
+
+
+
+import org.joda.time.DateTime;
 
 import models.Anunciante;
 import models.Anuncio;
@@ -73,6 +78,9 @@ public class Global extends GlobalSettings {
 					if (dao.findAllByClass(Anuncio.class).size() == 0){
 					
 						for (int i = 0; i < 500; i++) {
+							
+						Calendar date = Calendar.getInstance();
+						
 						Anuncio anuncio = new Anuncio();
 						Anunciante anunciante = new Anunciante();
 						Contato contatos = new Contato();
@@ -90,6 +98,9 @@ public class Global extends GlobalSettings {
 							instrumentos.add(new Instrumentos("Piano"));
 							instrumentos.add(new Instrumentos("Bongó"));
 							anunciante.setListInstrumentos(instrumentos);
+							
+							date.add(Calendar.DAY_OF_MONTH, -i);
+							anuncio.setDate(date.getTime());
 
 							anuncio.setInteresse("Em Banda");
 							
@@ -122,6 +133,10 @@ public class Global extends GlobalSettings {
 							anuncio.setDescricao("Toco Banjo e Clarinete palavra chave '123' ");
 							anuncio.setInteresse("Ocasionalmente");
 							anuncio.setPalavraChave("123");
+							
+						
+							date.add(Calendar.DAY_OF_MONTH, -i);
+							anuncio.setDate(date.getTime());
 
 							
 							anunciante.setNome("Nicolas");
