@@ -180,10 +180,72 @@
                                                  
                                           		<p></p>
                                           		<p align="right"> 
-                                                 <input type="text" class="form-control" style="width: 120px" name="palavrachave" placeholder="Palavra-chave" required>
-        									      <button type="submit" class="btn btn-default btn-sm">
-          									      <span class="glyphicon glyphicon-trash"></span>&ensp;
+                                                
+        							 
+        									     <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+                                                  Detalhes
+                                                 </button>
+                                                 
+                                                 
+                                                 <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">@Anuncio.getNome()
+        &ensp;&ensp;</h4> <h7><strong>@Anuncio.getDateFormat</strong></h7>
+      </div>
+      <div class="modal-body">
+         <strong>Descrição:</strong> &nbsp;
+         @Anuncio.getDescricao()
+        
+         <br><br>
+         <strong>Instrumentos: </strong> &nbsp;
+         @Anuncio.getAnunciante.getInstrumentos() 
+                  <br><br>
+         
+         <strong>Estilos Preferidos: </strong> &nbsp;
+         @Anuncio.getStylesLike() 
+        
+         <br><br>
+        <strong>Estilos que não desejados: </strong> &nbsp;
+         @Anuncio.getStylesNotLike() 
+         <br><br>
+          
+         <strong>Telefone: </strong>@Anuncio.getAnunciante.getContato.getTelefone() <br>
+         <strong>Email: </strong>@Anuncio.getAnunciante.getContato.getEmail() <br>
+         <strong>Facebook: </strong>@Anuncio.getAnunciante.getContato.getOutrosContatos <br>
+        
+          
+       
+       
+
+		</script>
+      </div>
+      <div class="modal-footer">
+     <div align="left">
+     
+     <form action="@routes.Application.pesquisarAnuncio()" method="get">
+                  
+                           <label>
+                          <input type="radio" name="deleteAnuncio" id="resolvi" value="resolvi" checked />Encontrei
+                            </label>
+                            <label>
+                          <input type="radio" name="deleteAnuncio" id="naoResolvi" value="naoResolvi" checked />Não Encontrei
+                           </label>
+                          
+        					</form>
+       <input type="text" class="form-control" style="width: 120px" name="palavrachave" placeholder="Palavra-chave" required>
+        									      <button type="submit" class="btn btn-default btn-danger" > Deletar Anuncio
+          									      <span class="glyphicon glyphicon-trash"></span>
         									     </button>
+        									     </div>
+        				
+      </div>
+    </div>
+  </div>
+</div>
       										
                                             	</p>
                             					</form>

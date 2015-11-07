@@ -32,15 +32,94 @@ import com.google.common.base.Objects;
 // Entidade que representa um Livro
 // Referenciar a uma tabela
 @Entity(name = "AnuncioDeletado")
-public class AnuncioDeletado extends Anuncio implements Comparable<Anuncio>{
+public class AnuncioDeletado {
 
-	public AnuncioDeletado(){
-		super();
+	// Todo Id tem que ter o GeneratedValue a não ser que ele seja setado
+	// Usar Id sempre Long
+	@Id
+	@GeneratedValue
+	private Long id;
+
+
+    @Column
+	private String nome;
+	@Column
+	private String descricao;
+
+	@Column
+	private String interesse;
+
+	public AnuncioDeletado() {
+	}
+    
+    public AnuncioDeletado(String nome, Anunciante anunciante,String descricao,String interesse) {
+        
+    
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
+	public Long getId() {
+		return id;
+	}
+    
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+
+    public String getNome() {
+		return nome;
+	}
+
+    public void setNome(String titulo) throws Exception {
+		if (titulo.trim().equals("") || titulo == null) {
+			throw new Exception("Insira um titulo ao anuncio");
+		}
+		this.nome = titulo;
+	}
+    
+	public String getDescricao() {
+		return descricao;
+	}
+
+
+	public void setDescricao(String descricao) throws Exception {
+		if (descricao.trim().equals("") || descricao == null) {
+			throw new Exception("Insira um descriçao ao anuncio.");
+		}
+		if (descricao.length() < 5) {
+			throw new Exception(
+					"Insira uma descrisao de no minimo 5 caracters.");
+		}
+		this.descricao = descricao;
 	}
 	
-	public AnuncioDeletado(String nome, Anunciante anunciante,String descricao,List<Style> stylesLike,
-    		List<Style> stylesNotLike , String interesse){
-		super(nome,anunciante,descricao,stylesLike,
-	    		stylesNotLike , interesse);
+	public String getInteresse() {
+		return interesse;
+	}
+
+
+	public void setInteresse(String interesse) throws Exception {
+		if(interesse.trim().equals("")){
+			throw new Exception("Insira onde voce quer tocar.");
+		}
+		this.interesse = interesse;
+	}
+	
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof AnuncioDeletado)) {
+			return false;
+		}
+		Anuncio outroAnuncio = (Anuncio) obj;
+		return Objects.equal(outroAnuncio.getNome(), this.getNome());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.getNome());
 	}
 }
+

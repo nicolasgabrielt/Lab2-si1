@@ -28,7 +28,7 @@ import java.util.Map;
 public class Application extends Controller {
 	private static Form<Anuncio> bookForm = Form.form(Anuncio.class);
 	private static final GenericDAO dao = new GenericDAO();
-	private static int anunciosResolvidos = dao.findAllByClass(AnuncioDeletado.class).size();
+	private static int anunciosResolvidos = 0;
 	
 	 private static int SEM_ERRO = 0;
 	 private static int COM_ERRO = 1;
@@ -117,66 +117,52 @@ public class Application extends Controller {
 		} catch (Exception e) {
 			e.getMessage();
 		}
-						return redirect(routes.Application.index());	
+			return redirect(routes.Application.index());	
 				
 	}
 	
 	
-	@Transactional 
-	public static void novoAnuncioDeletado(Anuncio anuncio){
-		
-		AnuncioDeletado anuncioDeletado = new AnuncioDeletado();
-		
-		anuncioDeletado = (AnuncioDeletado) anuncio;
-				
-		
-		try {
-				
-			/*
-			 * Atualiza dados do contato no banco de dados
-			 */
-			dao.persist(anuncioDeletado.getAnunciante().getContato());
-			dao.flush();
-		
-			/*
-			 * Atualiza dados do anunciante no banco de dados
-			 */
-			dao.persist(anuncioDeletado.getAnunciante());
-			dao.flush();
-						/*
-			 * Atualiza dados do anuncio no banco de dados
-			 */
-			dao.persist(anuncioDeletado);
-			dao.flush();
-		} catch (Exception e) {
-			e.getMessage();
-		}
-						
-				
-	}
 
 	@Transactional
 	public static Result deleteAnuncio(Long id) {
 		DynamicForm requestAnuncio = Form.form().bindFromRequest();
 		
 		if(requestAnuncio.get("palavrachave").equals((dao.findByEntityId(Anuncio.class, id)).getPalavrachave())){
+		
+		
+			Anuncio anuncio = dao.findByEntityId(Anuncio.class, id);
+			AnuncioDeletado anuncioDeletado = new AnuncioDeletado();
 			
-		
-		Anuncio anuncio = dao.findByEntityId(Anuncio.class, id);
-		
-		novoAnuncioDeletado(anuncio);
-		
+			try {
+				/*
+				 * Dados do anucio
+				 */
+				anuncioDeletado.setNome(anuncio.getNome());
+				anuncioDeletado.setDescricao(anuncio.getDescricao());
+				anuncioDeletado.setInteresse(anuncio.getInteresse());
+				/*
+				 * Atualiza dados do anuncio no banco de dados
+				 */
+				dao.persist(anuncioDeletado);
+				dao.flush();
+			} catch (Exception e) {
+				e.getMessage();
+			}		
+			
 		// Remove o Livro pelo Id
 		dao.removeById(Anuncio.class, id);
 		// Espelha no banco de dados
 		dao.flush();
+		System.out.println("DELETOU");
 		anunciosResolvidos = dao.findAllByClass(AnuncioDeletado.class).size();
 		
 		isErro = DELETOU;
-			return redirect(routes.Application.anuncios());
+			return redirect(routes.Application.anuncios()) ;
 		}
 		
 		isErro = COM_ERRO;
+		
+		System.out.println("NAO DELETOU");
 		return redirect(routes.Application.anuncios());
 		
 	}
